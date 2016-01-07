@@ -87,6 +87,14 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor * floatingLabelActiveTextColor;
 
 /**
+ * Instead of floating if and only if the text is not empty, setting this to true will
+ * show the floating label if the text is not empty OR the text field is the first
+ * responder. 
+ * Defaults to NO. (Only show floating label if the text is not empty)
+ */
+@property (nonatomic, assign) IBInspectable BOOL alwaysFloatWhileFirstResponder;
+
+/**
  * Indicates whether the floating label's appearance should be animated regardless of first responder status.
  * By default, animation only occurs if the text field is a first responder.
  */
@@ -106,7 +114,7 @@ IB_DESIGNABLE
 
 /**
  * Indicates whether the clearButton position is adjusted to align with the text
- * Defaults to 1.
+ * Defaults to YES.
  */
 @property (nonatomic, assign) IBInspectable BOOL adjustsClearButtonRect;
 

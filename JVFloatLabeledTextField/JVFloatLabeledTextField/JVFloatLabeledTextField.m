@@ -65,6 +65,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     _floatingLabel.font = _floatingLabelFont;
     _floatingLabelTextColor = [UIColor grayColor];
     _floatingLabel.textColor = _floatingLabelTextColor;
+    _alwaysFloatWhileFirstResponder = NO;
     _animateEvenIfNotFirstResponder = NO;
     _floatingLabelShowAnimationDuration = kFloatingLabelShowAnimationDuration;
     _floatingLabelHideAnimationDuration = kFloatingLabelHideAnimationDuration;
@@ -308,13 +309,15 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
                                       floatingLabelSize.height);
     
     BOOL firstResponder = self.isFirstResponder;
-    _floatingLabel.textColor = (firstResponder && self.text && self.text.length > 0 ?
+    BOOL textIsEmpty = !self.text || 0 == [self.text length];
+    BOOL showFloatingLabel = !textIsEmpty || (self.alwaysFloatWhileFirstResponder && firstResponder);
+    _floatingLabel.textColor = (firstResponder && showFloatingLabel ?
                                 self.labelActiveColor : self.floatingLabelTextColor);
-    if (!self.text || 0 == [self.text length]) {
-        [self hideFloatingLabel:firstResponder];
+    if (showFloatingLabel) {
+        [self showFloatingLabel:firstResponder];
     }
     else {
-        [self showFloatingLabel:firstResponder];
+        [self hideFloatingLabel:firstResponder];
     }
 }
 
