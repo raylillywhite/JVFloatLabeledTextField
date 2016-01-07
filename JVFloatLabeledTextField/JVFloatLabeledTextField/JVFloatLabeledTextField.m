@@ -34,6 +34,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 @implementation JVFloatLabeledTextField
 {
     BOOL _isFloatingLabelFontDefault;
+    NSString *_savedPlaceholder;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -132,6 +133,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 - (void)showFloatingLabel:(BOOL)animated
 {
     void (^showBlock)() = ^{
+        [super setPlaceholder:nil];
         _floatingLabel.alpha = 1.0f;
         _floatingLabel.frame = CGRectMake(_floatingLabel.frame.origin.x,
                                           _floatingLabelYPadding,
@@ -154,6 +156,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 - (void)hideFloatingLabel:(BOOL)animated
 {
     void (^hideBlock)() = ^{
+        [super setPlaceholder:_savedPlaceholder];
         _floatingLabel.alpha = 0.0f;
         _floatingLabel.frame = CGRectMake(_floatingLabel.frame.origin.x,
                                           _floatingLabel.font.lineHeight + _placeholderYPadding,
@@ -228,6 +231,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 - (void)setPlaceholder:(NSString *)placeholder
 {
     [super setPlaceholder:placeholder];
+    _savedPlaceholder = placeholder;
     [self setFloatingLabelText:placeholder];
 }
 
